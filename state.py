@@ -149,10 +149,13 @@ class State:
             Dictionary mapping bitstrings to their probabilities
         """
         probs = {}
+        for i in range(2**self.n_qubits):
+            bitstring = format(i, f"0{self.n_qubits}b")
+            probs[bitstring] = 0.0
+            
         for bitstring, amplitude in self.state:
             prob = abs(amplitude) ** 2
-            if prob > 1e-10:  # Ignore very small probabilities
-                probs[bitstring.to01()] = prob
+            probs[bitstring.to01()] = prob
         return probs
 
     def __str__(self):
@@ -163,15 +166,19 @@ class State:
         """
         self.state = self.state.sorted(key=lambda x: x[0].to01())
 
-        # Only show non-zero amplitudes
-        non_zero_states = [(b, a) for b, a in self.state if abs(a) > 1e-10]
+        state_dict = {}
+        for bitstring, amplitude in self.state:
+            state_dict[bitstring.to01()] = amplitude
 
-        if not non_zero_states:
-            result = "Quantum state: |0⟩^n (all zero amplitudes)"
-        else:
-            result = "Quantum state:\n" + "\n".join(
-                [f"|{b.to01()}⟩: {a:.3f}" for b, a in non_zero_states]
-            )
+        all_states = []
+        for i in range(2**self.n_qubits):
+            bitstring = format(i, f"0{self.n_qubits}b")
+            amplitude = state_dict.get(bitstring, 0.0)
+            all_states.append((bitstring, amplitude))
+
+        result = "Quantum state:\n" + "\n".join(
+            [f"|{b}⟩: {a:.3f}" for b, a in all_states]
+        )
 
         # Add classical register values if they exist
         if self.n_bits > 0:
@@ -205,11 +212,16 @@ def run(state: State, shots: int = 1024) -> Dict[str, int]:
     if state.measure_all_flag:
         qubits_to_measure = list(range(state.n_qubits))
         print(f"Running {shots} measurements on all qubits...")
+        n_measured_qubits = state.n_qubits
     else:
         qubits_to_measure = sorted(list(state.measurement_qubits))
         print(f"Running {shots} measurements on qubits {qubits_to_measure}...")
+        n_measured_qubits = len(qubits_to_measure)
 
     counts = {}
+    for i in range(2**n_measured_qubits):
+        outcome = format(i, f"0{n_measured_qubits}b")
+        counts[outcome] = 0
 
     for _ in range(shots):
         # Work on a copy of the state to avoid modifying the original

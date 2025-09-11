@@ -1,7 +1,7 @@
 [project]
 name = "lab-3"
 version = "0.1.0"
-description = "Quantum Computing Lab 2 Exercises"
+description = "Quantum Computing Lab 3 Exercises"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

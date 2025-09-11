@@ -2,28 +2,17 @@
 
 ## Tasks
 
-1. Initialize a state with 2 Qubits, and apply $X$ and $X^2$ gates on those qubits respectively. The output should look like as follows.
+1. Verify the effect of $S$ gate on $|0⟩$, $|1⟩$ and $|+⟩$.
 
-    ```bash
-    Quantum state:
-    |10⟩: 1.000
-    ```
+2. Show how phase interferes with amplitude on $|+⟩$. Use $H^2$ and $HSH$. Compare the result with task 1.
 
-2. Apply $H$ gate on a qubit and see the output.
+3. Prepare state $|-⟩$. Apply T gates on it and get the same state.
 
-3. Apply $H$ gate on two qubits and see the output.
+4. Create bell states, $|\Phi^+⟩$ and $|\Psi^-⟩$.
 
-4. Verify $H^2 = I$ property on $|0⟩$ and $|1⟩$
+5. Create a custom state $|GHZ_3^-⟩ = \frac{1}{\sqrt{2}}(|000⟩ - |111⟩)$.
 
-5. Apply $H$ and $CX$ gates to get $|\Phi^+⟩ = \frac{1}{\sqrt{2}}(|00⟩ + |11⟩)$. The output should look like as follows:
-
-    ```bash
-    Quantum state:
-    |00⟩: 0.707
-    |11⟩: 0.707
-    ```
-
-6. Similar to task 5, create a three qubit state as $\frac{1}{\sqrt{2}}(|000⟩ + |111⟩)$.
+6. Create a custom state $\frac{1}{\sqrt{2}}(|001⟩ + |110⟩)$.
 
 ## Setup
 
